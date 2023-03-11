@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace SwordDamageEnviro
 {
@@ -34,6 +35,8 @@ namespace SwordDamageEnviro
         public void RollDice()
         {
             sword.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+            // sword.SetFlaming(flaming.IsChecked.Value);
+            // sword.SetMagic(magic.IsChecked.Value);
             DisplayDamage();
         }
 
@@ -47,25 +50,25 @@ namespace SwordDamageEnviro
             RollDice();
         }
 
-        private void flaming_Checked(object sender, RoutedEventArgs e)
+        private void Flaming_Checked(object sender, RoutedEventArgs e)
         {
             sword.SetFlaming(true);
             DisplayDamage();
         }
 
-        private void flaming_Unchecked(object sender, RoutedEventArgs e)
+        private void Flaming_Unchecked(object sender, RoutedEventArgs e)
         {
             sword.SetFlaming(false);
             DisplayDamage();
         }
 
-        private void magic_Checked(object sender, RoutedEventArgs e)
+        private void Magic_Checked(object sender, RoutedEventArgs e)
         {
             sword.SetMagic(true);
             DisplayDamage();
         }
 
-        private void magic_Unchecked(object sender, RoutedEventArgs e)
+        private void Magic_Unchecked(object sender, RoutedEventArgs e)
         {
             sword.SetMagic(false);
             DisplayDamage();
@@ -86,6 +89,7 @@ class SwordDamage
     public void CalculateDamage()
     {
         Damage = (int)(Roll * MagicMult) + BASE_DAM + FlamingDam;
+        Debug.WriteLine($"CalculateDamage finished: {Damage} (roll: {Roll})");
     }
     public void SetMagic(bool isMagic)
     {
@@ -98,6 +102,7 @@ class SwordDamage
             MagicMult = 1M;
         }
         CalculateDamage();
+        Debug.WriteLine($"SetMagic finished: {Damage} (roll: {Roll})");
     }
     public void SetFlaming(bool isFlaming)
     {
@@ -106,5 +111,6 @@ class SwordDamage
         {
             Damage += FLAME_DAM;
         }
+        Debug.WriteLine($"SetFlaming finished: {Damage} (roll: {Roll})");
     }
 }
