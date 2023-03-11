@@ -20,19 +20,91 @@ namespace SwordDamageEnviro
     /// </summary>
     public partial class MainWindow : Window
     {
+        Random random = new Random();
+        SwordDamage sword = new SwordDamage();
+
         public MainWindow()
         {
             InitializeComponent();
+            sword.SetMagic(false);
+            sword.SetFlaming(false);
+            RollDice();
         }
 
-        private void flaming_Checked(object sender, RoutedEventArgs e)
+        public void RollDice()
         {
+            sword.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+            DisplayDamage();
+        }
 
+        void DisplayDamage()
+        {
+            damage.Text = "Rolled " + sword.Roll + " for " + sword.Damage + " HP";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            RollDice();
+        }
 
+        private void flaming_Checked(object sender, RoutedEventArgs e)
+        {
+            sword.SetFlaming(true);
+            DisplayDamage();
+        }
+
+        private void flaming_Unchecked(object sender, RoutedEventArgs e)
+        {
+            sword.SetFlaming(false);
+            DisplayDamage();
+        }
+
+        private void magic_Checked(object sender, RoutedEventArgs e)
+        {
+            sword.SetMagic(true);
+            DisplayDamage();
+        }
+
+        private void magic_Unchecked(object sender, RoutedEventArgs e)
+        {
+            sword.SetMagic(false);
+            DisplayDamage();
+        }
+    }
+}
+
+class SwordDamage
+{
+    public const int BASE_DAM = 3;
+    public const int FLAME_DAM = 2;
+
+    public int Roll;
+    public decimal MagicMult = 1M;
+    public int FlamingDam = 0;
+    public int Damage;
+
+    public void CalculateDamage()
+    {
+        Damage = (int)(Roll * MagicMult) + BASE_DAM + FlamingDam;
+    }
+    public void SetMagic(bool isMagic)
+    {
+        if (isMagic)
+        {
+            MagicMult = 1.75M;
+        }
+        else
+        {
+            MagicMult = 1M;
+        }
+        CalculateDamage();
+    }
+    public void SetFlaming(bool isFlaming)
+    {
+        CalculateDamage();
+        if (isFlaming)
+        {
+            Damage += FLAME_DAM;
         }
     }
 }
