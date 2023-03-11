@@ -35,8 +35,8 @@ namespace SwordDamageEnviro
         public void RollDice()
         {
             sword.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
-            // sword.SetFlaming(flaming.IsChecked.Value);
-            // sword.SetMagic(magic.IsChecked.Value);
+            sword.SetFlaming(flaming.IsChecked.Value);
+            sword.SetMagic(magic.IsChecked.Value);
             DisplayDamage();
         }
 
@@ -53,25 +53,25 @@ namespace SwordDamageEnviro
         private void Flaming_Checked(object sender, RoutedEventArgs e)
         {
             sword.SetFlaming(true);
-            DisplayDamage();
+            // DisplayDamage();
         }
 
         private void Flaming_Unchecked(object sender, RoutedEventArgs e)
         {
             sword.SetFlaming(false);
-            DisplayDamage();
+            // DisplayDamage();
         }
 
         private void Magic_Checked(object sender, RoutedEventArgs e)
         {
             sword.SetMagic(true);
-            DisplayDamage();
+            // DisplayDamage();
         }
 
         private void Magic_Unchecked(object sender, RoutedEventArgs e)
         {
             sword.SetMagic(false);
-            DisplayDamage();
+            // DisplayDamage();
         }
     }
 }
@@ -82,24 +82,25 @@ class SwordDamage
     public const int FLAME_DAM = 2;
 
     public int Roll;
-    public decimal MagicMult = 1M;
-    public int FlamingDam = 0;
+    private decimal magicMult = 1M;
+    // private int flamingDam = 0;
     public int Damage;
 
-    public void CalculateDamage()
+    // method made private to avoid misuse above
+    private void CalculateDamage()
     {
-        Damage = (int)(Roll * MagicMult) + BASE_DAM + FlamingDam;
+        Damage = (int)(Roll * magicMult) + BASE_DAM; // + flamingDam;
         Debug.WriteLine($"CalculateDamage finished: {Damage} (roll: {Roll})");
     }
     public void SetMagic(bool isMagic)
     {
         if (isMagic)
         {
-            MagicMult = 1.75M;
+            magicMult = 1.75M;
         }
         else
         {
-            MagicMult = 1M;
+            magicMult = 1M;
         }
         CalculateDamage();
         Debug.WriteLine($"SetMagic finished: {Damage} (roll: {Roll})");
