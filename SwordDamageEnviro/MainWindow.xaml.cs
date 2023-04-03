@@ -29,7 +29,7 @@ namespace SwordDamageEnviro
             InitializeComponent();
             sword.SetMagic(false);
             sword.SetFlaming(false);
-            RollDice();
+            // RollDice();
         }
 
         public void RollDice()
@@ -81,7 +81,15 @@ class SwordDamage
     public const int BASE_DAM = 3;
     public const int FLAME_DAM = 2;
 
-    public int Roll;
+    public int roll;
+    public int Roll { 
+        get { return roll; }
+        set
+        {
+            roll = value;
+            CalculateDamage();
+        }
+    }
     private decimal magicMult = 1M;
     // private int flamingDam = 0;
     public int Damage;
