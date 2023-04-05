@@ -85,6 +85,12 @@ class SwordDamage
     public bool flaming;
     public bool magic;
 
+    public SwordDamage(int startingRoll)
+    {
+        roll = startingRoll;
+        CalculateDamage();
+    }
+
     public int Roll { 
         get { return roll; }
         set
@@ -93,7 +99,7 @@ class SwordDamage
             CalculateDamage();
         }
     }
-    private decimal magicMult = 1M;
+    // private decimal magicMult = 1M;
     // private int flamingDam = 0;
     // public int Damage;
 
@@ -101,7 +107,11 @@ class SwordDamage
 
     private void CalculateDamage()
     {
-        Damage = (int)(Roll * magicMult) + BASE_DAM; // + flamingDam;
+        decimal MagicMult = 1M;
+        if (Magic) MagicMult = 1.75M;
+
+        Damage = (int)(Roll * MagicMult) + BASE_DAM; // + flamingDam;
+        if (Flaming) Damage += FLAME_DAM;
         Debug.WriteLine($"CalculateDamage finished: {Damage} (roll: {Roll})");
     }
 
