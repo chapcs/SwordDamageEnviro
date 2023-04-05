@@ -82,6 +82,8 @@ class SwordDamage
     public const int FLAME_DAM = 2;
 
     public int roll;
+    public int flaming;
+
     public int Roll { 
         get { return roll; }
         set
@@ -113,7 +115,18 @@ class SwordDamage
         CalculateDamage();
         Debug.WriteLine($"SetMagic finished: {Damage} (roll: {Roll})");
     }
-    public void SetFlaming(bool isFlaming)
+
+    public int Flaming
+    {
+        get { return flaming; }
+        set
+        {
+            flaming = value;
+            CalculateDamage();
+        }
+    }
+
+    /*public void SetFlaming(bool isFlaming)
     {
         CalculateDamage();
         if (isFlaming)
@@ -121,5 +134,5 @@ class SwordDamage
             Damage += FLAME_DAM;
         }
         Debug.WriteLine($"SetFlaming finished: {Damage} (roll: {Roll})");
-    }
+    }*/
 }
