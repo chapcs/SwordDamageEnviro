@@ -22,27 +22,23 @@ namespace SwordDamageEnviro
     public partial class MainWindow : Window
     {
         Random random = new Random();
-        SwordDamage sword = new SwordDamage();
+        SwordDamage sword;
 
         public MainWindow()
         {
             InitializeComponent();
-            sword.SetMagic(false);
-            sword.SetFlaming(false);
-            // RollDice();
+            sword = new SwordDamage(RollDice);
         }
 
         public void RollDice()
         {
             sword.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
-            sword.SetFlaming(flaming.IsChecked.Value);
-            sword.SetMagic(magic.IsChecked.Value);
             DisplayDamage();
         }
 
         void DisplayDamage()
         {
-            damage.Text = "Rolled " + sword.Roll + " for " + sword.Damage + " HP";
+            damage.Text = $"Rolled {sword.Roll} for {sword.Damage} HP";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -52,26 +48,26 @@ namespace SwordDamageEnviro
 
         private void Flaming_Checked(object sender, RoutedEventArgs e)
         {
-            sword.SetFlaming(true);
-            // DisplayDamage();
+            sword.Flaming = true;
+            DisplayDamage();
         }
 
         private void Flaming_Unchecked(object sender, RoutedEventArgs e)
         {
-            sword.SetFlaming(false);
-            // DisplayDamage();
+            sword.Flaming = false;
+            DisplayDamage();
         }
 
         private void Magic_Checked(object sender, RoutedEventArgs e)
         {
-            sword.SetMagic(true);
-            // DisplayDamage();
+            sword.Magic = true;
+            DisplayDamage();
         }
 
         private void Magic_Unchecked(object sender, RoutedEventArgs e)
         {
-            sword.SetMagic(false);
-            // DisplayDamage();
+            sword.Magic = false;
+            DisplayDamage();
         }
     }
 }
@@ -88,13 +84,16 @@ class SwordDamage
     public bool flaming;
     public bool magic;
 
+    public int Damage { get; private set; }
+
     public SwordDamage(int startingRoll)
     {
         roll = startingRoll;
         CalculateDamage();
     }
 
-    public int Roll { 
+    public int Roll
+    {
         get { return roll; }
         set
         {
@@ -102,8 +101,6 @@ class SwordDamage
             CalculateDamage();
         }
     }
-
-    public int Damage { get; private set; }
 
     private void CalculateDamage()
     {
@@ -114,7 +111,6 @@ class SwordDamage
         if (Flaming) Damage += FLAME_DAM;
         Debug.WriteLine($"CalculateDamage finished: {Damage} (roll: {Roll})");
     }
-
     public bool Magic
     {
         get { return magic; }
@@ -124,7 +120,6 @@ class SwordDamage
             CalculateDamage();
         }
     }
-
     public bool Flaming
     {
         get { return flaming; }
