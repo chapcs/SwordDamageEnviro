@@ -76,6 +76,9 @@ namespace SwordDamageEnviro
     }
 }
 
+/// <summary>
+/// Main method that calculates the the sword damage based off different params
+/// </summary>
 class SwordDamage
 {
     public const int BASE_DAM = 3;
@@ -99,9 +102,6 @@ class SwordDamage
             CalculateDamage();
         }
     }
-    // private decimal magicMult = 1M;
-    // private int flamingDam = 0;
-    // public int Damage;
 
     public int Damage { get; private set; }
 
@@ -110,7 +110,7 @@ class SwordDamage
         decimal MagicMult = 1M;
         if (Magic) MagicMult = 1.75M;
 
-        Damage = (int)(Roll * MagicMult) + BASE_DAM; // + flamingDam;
+        Damage = (int)(Roll * MagicMult) + BASE_DAM;
         if (Flaming) Damage += FLAME_DAM;
         Debug.WriteLine($"CalculateDamage finished: {Damage} (roll: {Roll})");
     }
@@ -125,20 +125,6 @@ class SwordDamage
         }
     }
 
-    /*public void SetMagic(bool isMagic)
-    {
-        if (isMagic)
-        {
-            magicMult = 1.75M;
-        }
-        else
-        {
-            magicMult = 1M;
-        }
-        CalculateDamage();
-        Debug.WriteLine($"SetMagic finished: {Damage} (roll: {Roll})");
-    }*/
-
     public bool Flaming
     {
         get { return flaming; }
@@ -148,14 +134,4 @@ class SwordDamage
             CalculateDamage();
         }
     }
-
-    /*public void SetFlaming(bool isFlaming)
-    {
-        CalculateDamage();
-        if (isFlaming)
-        {
-            Damage += FLAME_DAM;
-        }
-        Debug.WriteLine($"SetFlaming finished: {Damage} (roll: {Roll})");
-    }*/
 }
