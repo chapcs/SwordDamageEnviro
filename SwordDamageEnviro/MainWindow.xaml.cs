@@ -21,18 +21,18 @@ namespace SwordDamageEnviro
     /// </summary>
     public partial class MainWindow : Window
     {
-        Random random = new Random();
+        static Random random = new Random();
         SwordDamage sword;
 
         public MainWindow()
         {
             InitializeComponent();
-            sword = new SwordDamage(RollDice);
+            sword = new SwordDamage(RandomRoll());
         }
 
         public void RollDice()
         {
-            sword.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+            sword.Roll = RandomRoll();
             DisplayDamage();
         }
 
@@ -68,6 +68,11 @@ namespace SwordDamageEnviro
         {
             sword.Magic = false;
             DisplayDamage();
+        }
+
+        static int RandomRoll()
+        {
+            return random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
         }
     }
 }
